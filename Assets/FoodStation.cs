@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class FoodStation : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameManager gameManager;
     public Food foodPrefab;
     public Transform layer2;
     public Transform layer3;
@@ -14,6 +15,11 @@ public class FoodStation : MonoBehaviour
     {
         if (preparedIngredients.Count >= 4)
         {
+            return;
+        }
+        if (gameManager.TryUseIngredient(ingredientPrefab.ingredientName) == false)
+        {
+            Debug.Log("Not enough ingredients!");
             return;
         }
         Transform spawnPoint = transform;
@@ -44,16 +50,22 @@ public class FoodStation : MonoBehaviour
     public Customer customer;
     public void ServeCustomer()
     {
+        if (customer == null)
+        {
+            return;
+        }
         if (customer.CheckOrder(preparedIngredients))
         {
             customer.CompleteOrder();
             Debug.Log("Correct Order!");
             ClearIngredients();
+            gameManager.receiveMoney();
         }
         else
         {
             Debug.Log("Order is incorrect!");
         }
+    
     }
     void Start()
     {

@@ -19,7 +19,7 @@ public class Customer : MonoBehaviour
     public float interactionDistance = 3f;
     public bool CheckOrder(List<Food> meal)
     {
-        if (orderTaken == false || orderCompleted == true)
+        if (orderTaken == false || orderCompleted == true || isLeaving == true)
         {
             return false;
         }
@@ -40,18 +40,53 @@ public class Customer : MonoBehaviour
     public void CompleteOrder()
     {
         orderCompleted = true;
-        orderText.text = "Thanks!";
+        orderText.text = "Nice!";
+        isLeaving = true;
     }
-    public Transform exitSpot;  
+    public Transform exitSpot;
+    private string[] fillings =
+    {
+        "Tentacle", "Dragon Scale", "Bone", "Meat", "Cheese"
+    };
+    private string orderName;
+    private bool isLeaving = false;
+    private float patienceRemaining = 20f;
+    public TMP_Text patienceText;
+
+    void generateOrder()
+    {
+        requestedIngredients.Clear();
+        requestedIngredients.Add("Bun");
+        int fillingCount = Random.Range(1, 3);
+        orderName = "";
+        for (int i = 0; i < fillingCount; i++)
+        {
+            string filling = fillings[Random.Range(0, fillings.Length)];
+            requestedIngredients.Add(filling);
+            
+            if (i > 0)
+            {
+                orderName = orderName + " and ";
+            }
+            orderName = orderName + filling;
+        }
+        requestedIngredients.Add("Bun");
+        orderName = orderName + "Burger";
+    
+
+    }
     void Start()
     {
-        orderText.text = "Customer approching, please wait";
+        orderText.text = "Customer approaching, please wait";
+        generateOrder();
+        patienceText.text = "";
     }
     // Update is called once per frame
     void Update()
     {
-        if (orderCompleted == true)
+        if (isLeaving == true)
         {
+            patienceText.text = "";
             transform.position = Vector3.MoveTowards(transform.position, exitSpot.position, moveSpeed * Time.deltaTime);
             if (transform.position == exitSpot.position)
             {
@@ -70,13 +105,25 @@ public class Customer : MonoBehaviour
             }
         }
         
+        if (hasArrived == true)
+        {
+            patienceRemaining = patienceRemaining - Time.deltaTime;
+            patienceText.text = "Patience: " + Mathf.RoundToInt(patienceRemaining).ToString();
+            if (patienceRemaining <= 0f)
+            {
+                isLeaving = true;
+                orderText.text = "Bruh.";
+                return;
+            }
+        }
         if (hasArrived == true && orderTaken == false)
         {
             float distance = Vector3.Distance(transform.position, player.position);
             if (distance <= interactionDistance && Keyboard.current.eKey.wasPressedThisFrame)
             {
-                orderText.text = "Order: " + string.Join(", ", requestedIngredients);
+                orderText.text = "Order: " + orderName;
                 orderTaken = true;
+                patienceRemaining = 10f;
             }
         }
     }
