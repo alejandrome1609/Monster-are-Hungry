@@ -21,6 +21,10 @@ public class CustomerSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.gameStarted == false)
+        {
+            return;
+        }
 
         if (currentCustomer == null && gameManager.dayOpen == true)
         {

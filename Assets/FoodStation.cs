@@ -19,7 +19,7 @@ public class FoodStation : MonoBehaviour
         }
         if (gameManager.TryUseIngredient(ingredientPrefab.ingredientName) == false)
         {
-            Debug.Log("Not enough ingredients!");
+            Debug.Log("not enough ingredients!");
             return;
         }
         Transform spawnPoint = transform;
@@ -54,16 +54,20 @@ public class FoodStation : MonoBehaviour
         {
             return;
         }
+        if (customer.PlayerIsNear() == false)
+        {
+            return;
+        }
         if (customer.CheckOrder(preparedIngredients))
         {
             customer.CompleteOrder();
-            Debug.Log("Correct Order!");
+            Debug.Log("correct son");
             ClearIngredients();
             gameManager.receiveMoney();
         }
         else
         {
-            Debug.Log("Order is incorrect!");
+            Debug.Log("incorrect son");
         }
     
     }

@@ -17,6 +17,10 @@ public class Customer : MonoBehaviour
     private bool hasArrived = false;
     public Transform player;
     public float interactionDistance = 3f;
+    public bool PlayerIsNear()
+    {
+        return Vector3.Distance(transform.position, player.position) <= interactionDistance;
+    }
     public bool CheckOrder(List<Food> meal)
     {
         if (orderTaken == false || orderCompleted == true || isLeaving == true)
@@ -77,7 +81,7 @@ public class Customer : MonoBehaviour
     }
     void Start()
     {
-        orderText.text = "Customer approaching, please wait";
+        orderText.text = "Waiting for order.";
         generateOrder();
         patienceText.text = "";
     }
@@ -101,7 +105,7 @@ public class Customer : MonoBehaviour
             if (transform.position == serviceSpot.position)
             {
                 hasArrived = true;
-                orderText.text = "Customer has arrived, take their order by pressing E!";
+                orderText.text = "Waiting for order.";
             }
         }
         

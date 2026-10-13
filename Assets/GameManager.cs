@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text shopMeatText;
     public TMP_Text shopCheeseText;
     public float dayTimeRemaining = 15f;
-    public int dailyQuota = 30;
+    public int dailyQuota = 25;
     public bool dayOpen = true;
     private bool daySettled = false;
     public PlayerScript playerScript;
@@ -35,8 +36,44 @@ public class GameManager : MonoBehaviour
     public TMP_Text dayEndText;
     public GameObject nextDayButton;
     public GameObject retryButton;
+    public float dayDuration = 120f;
+    public int quotaIncrease = 5;
+    private int dayNumber = 1;
 
-private bool quotaPaid = false;
+    private bool quotaPaid = false;
+    public TMP_Text dayInfoText;
+    public GameObject startPanel;
+    public bool gameStarted = false;
+
+    public void playGame()
+    {
+        if (gameStarted == true)
+        {
+            return;
+        }
+        gameStarted = true;
+        dayOpen = true;
+        dayTimeRemaining = dayDuration;
+        startPanel.SetActive(false);
+        playerScript.SetDayEndOpen(false);
+        updateDayInfo();
+    }
+
+    void updateDayInfo()
+    {
+       string timeDisplay;
+
+       if (dayOpen == true)
+        {
+            timeDisplay = "Time: " + Mathf.CeilToInt(dayTimeRemaining) + "s";
+        }
+        else
+        {
+            timeDisplay = "Closed.";
+        }
+
+        dayInfoText.text = "Day " + dayNumber + "\n" + timeDisplay + "\nDad's Payment: $" + dailyQuota;
+    }
 
     public void SettleDay()
     {
@@ -67,6 +104,7 @@ private bool quotaPaid = false;
 
         nextDayButton.SetActive(quotaPaid);
         retryButton.SetActive(quotaPaid == false);
+        dayInfoText.gameObject.SetActive(false);
         dayEndPanel.SetActive(true);
     }
     public void UpdateStockText()
@@ -89,7 +127,32 @@ private bool quotaPaid = false;
     {
         money = money + bugerPrice;
         moneyText.text = "Money: " + money;
-        Debug.Log("Money: " + money);
+    }
+
+    public void NextDay()
+    {
+        if (daySettled == false || quotaPaid == false)
+        {
+            return;
+        }
+
+        dayNumber = dayNumber + 1;
+        dailyQuota = dailyQuota + quotaIncrease;
+        dayTimeRemaining = dayDuration;
+
+        daySettled = false;
+        quotaPaid = false;
+        dayOpen = true;
+
+        dayEndPanel.SetActive(false);
+        playerScript.SetDayEndOpen(false);
+        dayInfoText.gameObject.SetActive(true);
+        updateDayInfo();
+    }
+
+    public void RetryDay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public bool TryUseIngredient(string ingredientName)
@@ -138,7 +201,7 @@ private bool quotaPaid = false;
     {
         if (money < 1)
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("not enough, get more!!!!");
             return;
         }
         money = money - 1;
@@ -151,7 +214,7 @@ private bool quotaPaid = false;
     {
         if (money < 2)
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("not enough, get more!!!!");
             return;
         }
         money = money - 2;
@@ -163,7 +226,7 @@ private bool quotaPaid = false;
     {
         if (money < 2)
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("not enough, get more!!!!");
             return;
         }
         money = money - 2;
@@ -175,7 +238,7 @@ private bool quotaPaid = false;
     {
         if (money < 2)
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("not enough, get more!!!!");
             return;
         }
         money = money - 2;
@@ -187,7 +250,7 @@ private bool quotaPaid = false;
     {
         if (money < 3)
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("not enough, get more!!!!");
             return;
         }
         money = money - 3;
@@ -199,7 +262,7 @@ private bool quotaPaid = false;
     {
         if (money < 3)
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("not enough, get more!!!!");
             return;
         }
         money = money - 3;
@@ -213,11 +276,21 @@ private bool quotaPaid = false;
         moneyText.text = "Money: " + money;
         UpdateStockText();
         dayEndPanel.SetActive(false);
+        dayTimeRemaining = dayDuration;
+        updateDayInfo();
+        gameStarted = false;
+        dayOpen = false;
+        startPanel.SetActive(true);
+        playerScript.SetDayEndOpen(true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameStarted == false)
+        {
+            return;
+        }
         if (dayOpen == true)
         {
             dayTimeRemaining = dayTimeRemaining - Time.deltaTime;
@@ -225,8 +298,9 @@ private bool quotaPaid = false;
             {
                 dayTimeRemaining = 0f;
                 dayOpen = false;
-                Debug.Log("Day is over!");
+                Debug.Log("day is over.");
             }
         }
+        updateDayInfo();
     }
 }
