@@ -19,7 +19,56 @@ public class GameManager : MonoBehaviour
     public TMP_Text boneText;
     public TMP_Text meatText;
     public TMP_Text cheeseText;
+    public TMP_Text shopBunText;
+    public TMP_Text shopTentacleText;
+    public TMP_Text shopDragonScaleText;
+    public TMP_Text shopBoneText;
+    public TMP_Text shopMeatText;
+    public TMP_Text shopCheeseText;
+    public float dayTimeRemaining = 15f;
+    public int dailyQuota = 30;
+    public bool dayOpen = true;
+    private bool daySettled = false;
+    public PlayerScript playerScript;
+    public FoodStation foodStation;
+    public GameObject dayEndPanel;
+    public TMP_Text dayEndText;
+    public GameObject nextDayButton;
+    public GameObject retryButton;
 
+private bool quotaPaid = false;
+
+    public void SettleDay()
+    {
+        if (dayOpen == true || daySettled == true)
+        {
+            return;
+        }
+
+        daySettled = true;
+        quotaPaid = money >= dailyQuota;
+
+        if (quotaPaid == true)
+        {   
+            money = money - dailyQuota;
+            moneyText.text = "Money: " + money;
+
+            dayEndText.text = "Day complete! Paid Dad: $"
+                + dailyQuota + "\nMoney remaining: $" + money;
+        }
+        else
+        {
+        dayEndText.text = "Game over! Dad wanted: $"
+            + dailyQuota + "\nbut you only had $" + money;
+        }
+
+        foodStation.ClearIngredients();
+        playerScript.SetDayEndOpen(true);
+
+        nextDayButton.SetActive(quotaPaid);
+        retryButton.SetActive(quotaPaid == false);
+        dayEndPanel.SetActive(true);
+    }
     public void UpdateStockText()
     {
         bunText.text = "Bun: " + bunStock;
@@ -28,6 +77,12 @@ public class GameManager : MonoBehaviour
         boneText.text = "Bone: " + boneStock;
         meatText.text = "Meat: " + meatStock;
         cheeseText.text = "Cheese: " + cheeseStock;
+        shopBunText.text = "Bun: " + bunStock;
+        shopTentacleText.text = "Tentacle: " + tentacleStock;
+        shopDragonScaleText.text = "Dragon Scale: " + dragonScaleStock;
+        shopBoneText.text = "Bone: " + boneStock;
+        shopMeatText.text = "Meat: " + meatStock;
+        shopCheeseText.text = "Cheese: " + cheeseStock;
     }
 
     public void receiveMoney()
@@ -78,15 +133,100 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
+
+    public void buyBuns()
+    {
+        if (money < 1)
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+        money = money - 1;
+        bunStock = bunStock + 1;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+    }
+
+    public void buyMeat()
+    {
+        if (money < 2)
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+        money = money - 2;
+        meatStock = meatStock + 1;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+    }
+    public void buyCheese()
+    {
+        if (money < 2)
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+        money = money - 2;
+        cheeseStock = cheeseStock + 1;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+    }
+    public void buyBone()
+    {
+        if (money < 2)
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+        money = money - 2;
+        boneStock = boneStock + 1;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+    }
+    public void buyTentacle()
+    {
+        if (money < 3)
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+        money = money - 3;
+        tentacleStock = tentacleStock + 1;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+    }
+    public void buyDragonScale()
+    {
+        if (money < 3)
+        {
+            Debug.Log("Not enough money!");
+            return;
+        }
+        money = money - 3;
+        dragonScaleStock = dragonScaleStock + 1;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+    }
+
     void Start()
     {
         moneyText.text = "Money: " + money;
         UpdateStockText();
+        dayEndPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (dayOpen == true)
+        {
+            dayTimeRemaining = dayTimeRemaining - Time.deltaTime;
+            if (dayTimeRemaining <= 0f)
+            {
+                dayTimeRemaining = 0f;
+                dayOpen = false;
+                Debug.Log("Day is over!");
+            }
+        }
     }
 }

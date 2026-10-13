@@ -11,6 +11,7 @@ public class CustomerSpawner : MonoBehaviour
     public TMPro.TMP_Text orderText;
     public FoodStation foodStation;
     private Customer currentCustomer;
+    public GameManager gameManager;
 
     void Start()
     {
@@ -21,9 +22,13 @@ public class CustomerSpawner : MonoBehaviour
     void Update()
     {
 
-        if (currentCustomer == null)
+        if (currentCustomer == null && gameManager.dayOpen == true)
         {
             spawnCustomer();
+        }
+        if (currentCustomer == null && gameManager.dayOpen == false)
+        {
+            gameManager.SettleDay();
         }
     }
 

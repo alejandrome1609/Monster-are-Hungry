@@ -12,24 +12,72 @@ public class PlayerScript : MonoBehaviour
     public CharacterController controller;
     public float moveSpeed = 4f;
     public GameObject ingredientMenu;
+    public GameObject shopMenu;
+    public Collider shopTrigger;
+    private bool shopMenuOpen = false;
     private bool menuOpen = false;
+    private bool dayEndOpen = false;
+
+    public void SetDayEndOpen(bool isOpen)
+    {
+        dayEndOpen = isOpen;
+
+        menuOpen = false;
+        ingredientMenu.SetActive(false);
+        shopMenu.SetActive(false);
+
+        if (isOpen == false)
+        {
+            shopMenu.SetActive(shopMenuOpen);
+        }
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other == shopTrigger)
+        {
+            menuOpen = false;
+            ingredientMenu.SetActive(false);
+            shopMenuOpen = true;
+            shopMenu.SetActive(dayEndOpen == false);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other == shopTrigger)
+        {
+            shopMenuOpen = false;
+            shopMenu.SetActive(false);
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         ingredientMenu.SetActive(menuOpen);
+        shopMenu.SetActive(shopMenuOpen);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        if (dayEndOpen == true)
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            return;
+        }
+        
+        if (Keyboard.current.tabKey.wasPressedThisFrame && shopMenuOpen == false)
         {
             menuOpen = !menuOpen;
             ingredientMenu.SetActive(menuOpen);
         }
 
-        if (menuOpen == true)
+        if (menuOpen == true || shopMenuOpen == true)
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
@@ -45,7 +93,9 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
-        Vector2 mouseMovement = Mouse.current.delta.ReadValue();
+        if (shopMenuOpen == false)
+        {
+            Vector2 mouseMovement = Mouse.current.delta.ReadValue();
         transform.Rotate(0f, mouseMovement.x * mouseSensitivity, 0f);
 
         //Here, we make the camera move rather than the player so they dont fall, now the cool thing comes, we can add limits to how much it can reach, decided to keep it 80 and -80, these numbers because we then add it to quaternions euler, which from what I understood, it takes that number in degrees and turns it into degrees, so that the camera wont be able to past 80 or -80 degrees anymore!
@@ -62,6 +112,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         playerCamera.localRotation = Quaternion.Euler(limit, 0f, 0f);
+        }
 
         //Simple movement script based on where player is facing.
 
