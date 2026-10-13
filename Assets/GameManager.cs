@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text shopBoneText;
     public TMP_Text shopMeatText;
     public TMP_Text shopCheeseText;
-    public float dayTimeRemaining = 15f;
+    private float dayTimeRemaining = 15f;
     public int dailyQuota = 25;
     public bool dayOpen = true;
     private bool daySettled = false;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text dayEndText;
     public GameObject nextDayButton;
     public GameObject retryButton;
-    public float dayDuration = 120f;
+    public float dayDuration = 60f;
     public int quotaIncrease = 5;
     private int dayNumber = 1;
 
@@ -273,13 +273,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        moneyText.text = "Money: " + money;
-        UpdateStockText();
-        dayEndPanel.SetActive(false);
-        dayTimeRemaining = dayDuration;
-        updateDayInfo();
         gameStarted = false;
         dayOpen = false;
+        dayTimeRemaining = dayDuration;
+        moneyText.text = "Money: " + money;
+        UpdateStockText();
+        updateDayInfo();
+        dayEndPanel.SetActive(false);
         startPanel.SetActive(true);
         playerScript.SetDayEndOpen(true);
     }

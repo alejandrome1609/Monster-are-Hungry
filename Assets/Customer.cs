@@ -6,10 +6,7 @@ using UnityEngine.InputSystem;
 public class Customer : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private List<string> requestedIngredients = new List<string>()
-    {
-        "Bun","Meat","Bun"
-    };
+    private List<string> requestedIngredients = new List<string>();
     public TMP_Text orderText;
     private bool orderTaken = false;
     public Transform serviceSpot;
@@ -75,7 +72,7 @@ public class Customer : MonoBehaviour
             orderName = orderName + filling;
         }
         requestedIngredients.Add("Bun");
-        orderName = orderName + "Burger";
+        orderName = orderName + " Burger";
     
 
     }
@@ -122,8 +119,7 @@ public class Customer : MonoBehaviour
         }
         if (hasArrived == true && orderTaken == false)
         {
-            float distance = Vector3.Distance(transform.position, player.position);
-            if (distance <= interactionDistance && Keyboard.current.eKey.wasPressedThisFrame)
+            if (PlayerIsNear() && Keyboard.current.eKey.wasPressedThisFrame)
             {
                 orderText.text = "Order: " + orderName;
                 orderTaken = true;

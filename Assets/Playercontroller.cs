@@ -96,22 +96,22 @@ public class PlayerScript : MonoBehaviour
         if (shopMenuOpen == false)
         {
             Vector2 mouseMovement = Mouse.current.delta.ReadValue();
-        transform.Rotate(0f, mouseMovement.x * mouseSensitivity, 0f);
+            transform.Rotate(0f, mouseMovement.x * mouseSensitivity, 0f);
 
         //Here, we make the camera move rather than the player so they dont fall, now the cool thing comes, we can add limits to how much it can reach, decided to keep it 80 and -80, these numbers because we then add it to quaternions euler, which from what I understood, it takes that number in degrees and turns it into degrees, so that the camera wont be able to past 80 or -80 degrees anymore!
-        limit = limit - mouseMovement.y * mouseSensitivity;
+            limit = limit - mouseMovement.y * mouseSensitivity;
 
-        if (limit > 80f)
-        {
-            limit = 80f;
-        }
+            if (limit > 80f)
+            {
+                limit = 80f;
+            }
 
-        if (limit < -80f)
-        {
-            limit = -80f;
-        }
+            if (limit < -80f)
+            {
+                limit = -80f;
+            }
 
-        playerCamera.localRotation = Quaternion.Euler(limit, 0f, 0f);
+            playerCamera.localRotation = Quaternion.Euler(limit, 0f, 0f);
         }
 
         //Simple movement script based on where player is facing.

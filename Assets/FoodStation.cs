@@ -6,7 +6,6 @@ public class FoodStation : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameManager gameManager;
-    public Food foodPrefab;
     public Transform layer2;
     public Transform layer3;
     public Transform layer4;
