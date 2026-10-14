@@ -213,7 +213,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Feed Monsters (Or Shapes in this case).
+  m_text: Feed Monsters (Or Slimes in this case).
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1173,7 +1173,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233433777}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1235,7 +1235,8 @@ Transform:
   m_LocalPosition: {x: 0.37456, y: 0.45, z: -7.9}
   m_LocalScale: {x: 1.5489, y: 1, z: 1.19}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1108574572}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &271050208
@@ -2012,6 +2013,75 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1001 &411699040
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 233433781}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.2009
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.2009
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.2009
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.098351
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+      propertyPath: m_Name
+      value: Cosmic_Retro_Computer2_13
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
 --- !u!1 &424593348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,7 +2457,7 @@ MonoBehaviour:
     Build Burgers: Bun, named fillings in order, bun.
 
     Walk into the
-    square behind you to buy stuff.
+    computer behind you to buy stuff.
 
     Pay dad''s quota at the end of each day.
     Good luck :D'
@@ -2535,7 +2605,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: aae47073e40283c41a88049f2f0c6dac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5098,6 +5168,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102779021}
   m_CullTransparentMesh: 1
+--- !u!4 &1108574572 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7470d98aa5cda6e4dab342e4ff1b4ea8, type: 3}
+  m_PrefabInstance: {fileID: 411699040}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1162179703
 GameObject:
   m_ObjectHideFlags: 0
@@ -5456,7 +5531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gameManager: {fileID: 1391643293}
-  foodPrefab: {fileID: -5781050151366383194, guid: 1e1d4ea6b09554f8e9997b80613e210d, type: 3}
   layer2: {fileID: 284982164}
   layer3: {fileID: 358326287}
   layer4: {fileID: 2116069387}
@@ -6384,7 +6458,6 @@ MonoBehaviour:
   shopBoneText: {fileID: 1734502111}
   shopMeatText: {fileID: 1338020415}
   shopCheeseText: {fileID: 1423049244}
-  dayTimeRemaining: 15
   dailyQuota: 25
   dayOpen: 1
   playerScript: {fileID: 1670283419}
@@ -9451,7 +9524,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5f73475cf0cad364b9800b85c2a229fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
